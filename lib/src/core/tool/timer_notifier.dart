@@ -10,7 +10,7 @@ class TimerNotifier {
 
   bool get isActive => _timer?.isActive == true && (count ?? 0) > 0;
 
-  TimerNotifier(this.onChanged, {this.total = 10});
+  TimerNotifier(this.onChanged, {this.total = 30});
 
   void startTimer() {
     _timer?.cancel();
