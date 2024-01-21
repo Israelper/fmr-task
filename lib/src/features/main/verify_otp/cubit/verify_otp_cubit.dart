@@ -17,26 +17,33 @@ class VerifyOtpCubit extends Cubit<VerifyOtpState> {
   Stream<int> get timerStream => _timerStreamController.stream;
 
   void init() {
-    _onCodeSent();
+    emit(state.copyWith(
+        timer: TimerNotifier((int val) {
+      _timerStreamController.sink.add(val);
+      _validation();
+    })
+          ..startTimer()));
   }
 
   Future<void> onChangeCode(String code) async {
     const String password = '123456';
     final bool isCompleted = code.length == 6;
     final bool invalidCode = isCompleted && code != password;
-    final bool isCodeCorrect = isCompleted && code == password;
-    emit(state.copyWith(code: code, error: invalidCode ? 'Invalid code' : '', isCompleted: isCodeCorrect));
+    emit(state.copyWith(code: code, error: invalidCode ? 'Invalid code' : ''));
+    _validation();
   }
 
   Future<void> resendOTP() async {
     if (state.timer?.isActive == true) {
       return;
     }
-    _onCodeSent();
+    state.timer?.startTimer();
   }
 
-  void _onCodeSent() async {
-    emit(state.copyWith(timer: TimerNotifier(_timerStreamController.sink.add)..startTimer()));
+  void _validation() {
+    final bool isTimeActive = state.timer?.isActive == true;
+    final bool isCompleted = state.code.length == 6;
+    emit(state.copyWith(isButtonEnable: isTimeActive && isCompleted));
   }
 
   @override

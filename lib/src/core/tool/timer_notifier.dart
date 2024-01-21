@@ -3,14 +3,14 @@ import 'dart:async';
 
 class TimerNotifier {
   final int total;
-  final Function(int) onChanged;
+  final Function(int)? onChanged;
   int? count = 0;
 
   Timer? _timer;
 
-  bool get isActive => _timer?.isActive == true;
+  bool get isActive => _timer?.isActive == true && (count ?? 0) > 0;
 
-  TimerNotifier(this.onChanged, {this.total = 60});
+  TimerNotifier(this.onChanged, {this.total = 10});
 
   void startTimer() {
     _timer?.cancel();
@@ -19,12 +19,16 @@ class TimerNotifier {
       const Duration(seconds: 1),
       (timer) {
         if (count == 0) {
-          onChanged(0);
           _stopTimer();
+          if (onChanged != null) {
+            onChanged!(count!);
+          }
           return;
         }
         count = count! - 1;
-        onChanged(count!);
+        if (onChanged != null) {
+          onChanged!(count!);
+        }
       },
     );
   }

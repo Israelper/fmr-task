@@ -9,7 +9,7 @@ import 'package:ui_kit/ui_kit.dart';
 import 'package:fmr_task/src/core/config/router_config.dart';
 import 'package:fmr_task/src/core/router/main_route.dart';
 import 'package:fmr_task/src/features/main/verify_otp/cubit/verify_otp_cubit.dart';
-import 'widgets/count_dwon_timer.dart';
+import 'widgets/count_down_timer.dart';
 import 'widgets/verify_otp_number.dart';
 import 'widgets/verify_otp_resend.dart';
 
@@ -23,7 +23,7 @@ class VerifyOtpScreen extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             body: Padding(
-              padding: const EdgeInsets.all(100.0),
+              padding: const EdgeInsets.all(10.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,11 +33,11 @@ class VerifyOtpScreen extends StatelessWidget {
                       textAlign: TextAlign.center),
                   const VerifyOtpNumber(),
                   VerifyOtpResend(resendOtp: context.read<VerifyOtpCubit>().resendOTP),
-                  const CountdownTimer(),
+                  CountdownTimer(total: state.timer?.total ?? 60),
                   if (state.error?.isNotEmpty == true) UiText.body1(state.error!, color: Colors.red),
                   UiButton.outline(
                     text: 'Send',
-                    isDisabled: !state.isCompleted,
+                    isDisabled: !state.isButtonEnable,
                     onTap: () => routerConfig.router.go(MainRoute.homePath),
                   ),
                 ],

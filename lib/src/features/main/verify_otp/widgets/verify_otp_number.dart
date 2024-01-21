@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:math';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -14,8 +11,6 @@ import 'package:fmr_task/src/features/main/verify_otp/cubit/verify_otp_cubit.dar
 
 class VerifyOtpNumber extends StatelessWidget {
   const VerifyOtpNumber({super.key});
-
-  final double padding = UiSizes.xl;
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +30,10 @@ class VerifyOtpNumber extends StatelessWidget {
   }
 
   PinTheme _defaultTheme(BuildContext context) {
-    double width = MediaQuery.of(context).size.width - (padding * 2);
-    double boxWidth = min((width / 6), 64);
+    double width = MediaQuery.of(context).size.width;
     return PinTheme(
-      height: boxWidth,
-      width: boxWidth,
+      // height: boxWidth,
+      width: width,
       textStyle: UiTypography.h1.toTextStyle(context),
       decoration: BoxDecoration(
         color: Colors.transparent,

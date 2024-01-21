@@ -22,7 +22,7 @@ class UpdatePhoneScreen extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             body: Padding(
-              padding: const EdgeInsets.all(100.0),
+              padding: const EdgeInsets.all(10.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
